@@ -1,0 +1,9 @@
+	git clone https://github.com/u201013233/Machine-Vision.git
+	git clone https://github.com/u201013233/blog.git
+提交
+	git add -A
+	git commit -m "modify from xugangfeng"
+	git push -u origin hy 
+
+合并更新
+	git rebase upstream/master

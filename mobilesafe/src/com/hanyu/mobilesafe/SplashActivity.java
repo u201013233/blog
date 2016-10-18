@@ -1,5 +1,6 @@
 package com.hanyu.mobilesafe;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -11,17 +12,22 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.hanyu.mobilesafe.domain.UpdateInfo;
 import com.hanyu.mobilesafe.engine.UpdateInfoParser;
+import com.hanyu.mobilesafe.utils.DownLoadUtil;
 
 import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -57,6 +63,8 @@ public class SplashActivity extends Activity {
 	
 	private static final String TAG = "SplashActivity";
 	
+	private ProgressDialog pd;
+	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -84,16 +92,43 @@ public class SplashActivity extends Activity {
 				if (currenntVersion.equals(serverVersion))
 				{
 					Log.d(TAG, "版本号相同，进入主页面");
+					loadMainUI();
 				}
 				else {
 					Log.d(TAG, "版本号不相同");
 					showUpdateDialoog();
 				}
 				break;
+			case DOWNLOAD_SUCCESS:
+				Log.i(TAG, "文件下载成功");
+				File file = (File) msg.obj;
+				installApk(file);
+				break;
+			case DOWNLOAD_ERROR:
+				Toast.makeText(getApplicationContext(), "下载数据异常", 1).show();
+				loadMainUI();
+				break;
 			}
 		}
-
 	};
+	
+	/**
+	 * 安装一个apk文件
+	 * 
+	 * @param file
+	 *            要安装的完整文件名
+	 */
+	protected void installApk(File file) {
+		// 隐式意图
+		Intent intent = new Intent();
+		intent.setAction("android.intent.action.VIEW");// 设置意图的动作
+		intent.addCategory("android.intent.category.DEFAULT");// 为意图添加额外的数据
+		// intent.setType("application/vnd.android.package-archive");
+		// intent.setData(Uri.fromFile(file));
+		intent.setDataAndType(Uri.fromFile(file),
+				"application/vnd.android.package-archive");// 设置意图的数据与类型
+		startActivity(intent);// 激活该意图
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -194,20 +229,59 @@ public class SplashActivity extends Activity {
 		builder.setIcon(getResources().getDrawable(R.drawable.notification));
 		builder.setTitle("升级提示");
 		builder.setMessage(info.getDescription());
+		
+		pd = new ProgressDialog(this);
+		pd.setMessage("正在下载");
+		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		
 		builder.setPositiveButton("升级", new DialogInterface.OnClickListener() {			
 			public void onClick(DialogInterface dialog, int which) {
-				
+				if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+				{
+					pd.show();
+					new Thread(){
+						public void run() {
+							String path = info.getApkurl();
+							String filename = DownLoadUtil.getFilename(path);
+							File file = new File(Environment.getExternalStorageDirectory(), filename);
+							file = DownLoadUtil.getFile(path, file.getAbsolutePath(), pd);			
+							if (file != null)
+							{
+								Message msg = Message.obtain();
+								msg.what = DOWNLOAD_SUCCESS;
+								msg.obj = file;
+								handler.sendMessage(msg);
+							}
+							else
+							{
+								Message msg = Message.obtain();
+								msg.what = DOWNLOAD_ERROR;
+								handler.sendMessage(msg);
+							}	
+							pd.dismiss();
+						};
+					}.start();
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(), "sd卡不可用", 1).show();
+					loadMainUI();// 进入程序主界面
+				}
 			}
 		});
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {		
 			public void onClick(DialogInterface dialog, int which) {
-				
+				loadMainUI();
 			}
 		});
 		builder.create().show();
 	}
-	
+	/**
+	 * 加载主界面
+	 */
 	private void loadMainUI() {
-		
-	};
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();// 把当前的Activity从任务栈里面移除
+	}
 }

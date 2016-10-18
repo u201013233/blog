@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import android.app.ProgressDialog;
+import android.util.Log;
 
 /**
  * 下载的工具类 1.下载文件的路径 2.下载文件后保存的路径 3.关心 进度条 4.上下文
@@ -35,7 +36,11 @@ public class DownLoadUtil {
 			//服务端的响应的时间
 			conn.setConnectTimeout(5000);
 			//获取到服务端的文件的总长度
+			
 			int max = conn.getContentLength();
+			
+			Log.d("TAG", "getContentLength = " + max);
+			
 			//将进度条的最大值设置为要下载的文件的总长度
 			pd.setMax(max);
 			//获取到要下载的apk的文件的输入流

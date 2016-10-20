@@ -23,18 +23,40 @@ public final class R {
     }
     public static final class drawable {
         public static final int appicon=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int logo2=0x7f020002;
-        public static final int notification=0x7f020003;
+        public static final int bg_normal=0x7f020001;
+        public static final int bg_normal_pressed=0x7f020002;
+        public static final int bg_selector=0x7f020003;
+        public static final int devide_line=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int listview_devider=0x7f020006;
+        public static final int logo2=0x7f020007;
+        public static final int notification=0x7f020008;
+        public static final int widget01=0x7f020009;
+        public static final int widget02=0x7f02000a;
+        public static final int widget03=0x7f02000b;
+        public static final int widget04=0x7f02000c;
+        public static final int widget05=0x7f02000d;
+        public static final int widget06=0x7f02000e;
+        public static final int widget07=0x7f02000f;
+        public static final int widget08=0x7f020010;
+        public static final int widget09=0x7f020011;
     }
     public static final class id {
-        public static final int progress_horizontal=0x7f070002;
-        public static final int rl_splash=0x7f070000;
-        public static final int tv_splash_version=0x7f070001;
+        public static final int cb_set_autoupdate=0x7f070008;
+        public static final int gv_main=0x7f070000;
+        public static final int iv_main_item=0x7f070004;
+        public static final int progress_horizontal=0x7f070003;
+        public static final int rl_splash=0x7f070001;
+        public static final int tv_main_item=0x7f070005;
+        public static final int tv_set_autoupdate=0x7f070006;
+        public static final int tv_set_autoupdate_status=0x7f070007;
+        public static final int tv_splash_version=0x7f070002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_splash=0x7f030001;
+        public static final int main_item=0x7f030002;
+        public static final int setting_center=0x7f030003;
     }
     public static final class string {
         public static final int action_settings=0x7f050002;
@@ -44,21 +66,41 @@ public final class R {
     }
     public static final class style {
         /** 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     
- API 11 theme customizations can go here. 
 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
 
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     
- API 11 theme customizations can go here. 
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
          */
         public static final int AppBaseTheme=0x7f060000;
+        /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+         */
+        public static final int AppTheme=0x7f060001;
     }
 }

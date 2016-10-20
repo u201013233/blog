@@ -2,15 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.hanyu.mobilesafe.SplashActivity" >
+    android:orientation="vertical" >
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#0aff00"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"       
+        android:textColor="#66ff00"
         android:text="我的手机卫士"
+        android:gravity="center_horizontal"
         android:textSize="28sp" />
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/devide_line"
+        />
+    
+    <GridView
+        android:id="@+id/gv_main" 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:numColumns="3"
+        android:layout_marginTop="30dip"
+        />
+      
 
 </LinearLayout>

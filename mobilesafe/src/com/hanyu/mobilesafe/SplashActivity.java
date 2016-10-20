@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -163,6 +164,24 @@ public class SplashActivity extends Activity {
 	private class CheckVersionTask implements Runnable
 	{
 		public void run() {
+				
+			SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+			// 由sp对象来获取autoupdate所对应的boolean值，如果该键不存在，默认返回true
+			boolean autoupdate = sp.getBoolean("autoupdate", true);
+			// 自动更新没有开启
+			if (!autoupdate) {
+				try {
+					// 睡眠2秒钟的是为了播放动画
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// 睡眠2秒钟播放动画完毕后进入程序主界面
+				loadMainUI();
+				return;
+			}
+
 			startTime = System.currentTimeMillis();
 			Message msg = Message.obtain();
 			String serverurl = getResources().getString(R.string.serverurl);

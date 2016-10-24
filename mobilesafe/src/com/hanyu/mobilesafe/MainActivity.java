@@ -28,9 +28,13 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				switch (position) {
+				case 0:
+					Intent lostProtectIntent = new Intent(MainActivity.this, LostProtectedActivity.class);
+					startActivity(lostProtectIntent);					
+					break;
 				case 8:
-					Intent intent = new Intent(MainActivity.this, SettingCenterActivity.class);
-					startActivity(intent);					
+					Intent settingIntent = new Intent(MainActivity.this, SettingCenterActivity.class);
+					startActivity(settingIntent);					
 					break;
 				default:
 					break;
